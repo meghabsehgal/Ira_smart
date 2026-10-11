@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo's Barter Village Adventure!</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #e0f7fa;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        h1 { color: #ff6f00; }
+        .basket-box {
+            background: #fff8e1;
+            border: 3px dashed #ffa000;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .npc-card {
+            background: #f1f8e9;
+            border: 2px solid #7cb342;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-family: inherit;
+        }
+        button:hover { background-color: #388e3c; }
+        .hidden { display: none; }
+        .success { color: #2e7d32; font-weight: bold; }
+        .error { color: #c62828; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🪙 The Barter Village Quest</h1>
+    <p>Help Leo trade items in the ancient village market!</p>
+    
+    <div class="basket-box" id="inventory">
+        🛒 <strong>Your Basket:</strong> <span id="item-held">3 Juicy Apples 🍎🍎🍎</span>
+    </div>
+
+    <!-- LEVEL 1 -->
+    <div id="stage-1" class="npc-card">
+        <h3>1. Meet Potter Pam 🏺</h3>
+        <p>Pam says: "I love art, but I'm hungry! Do you want a clay bowl for your 3 apples?"</p>
+        <button onclick="makeChoice(1, false)">Trade apples for Clay Bowl</button>
+        <button onclick="makeChoice(1, true)">Say No & Keep Walking</button>
+        <p id="feedback-1" class="hidden"></p>
+    </div>
+
+    <!-- LEVEL 2 -->
+    <div id="stage-2" class="npc-card hidden">
+        <h3>2. Meet Baker Bob 🍞</h3>
+        <p>Bob says: "I need fresh apples for my tarts! I'll trade you a warm loaf of bread for your 3 apples!"</p>
+        <button onclick="makeChoice(2, true)">Trade apples for Bread 🍞</button>
+        <button onclick="makeChoice(2, false)">Say No</button>
+        <p id="feedback-2" class="hidden"></p>
+    </div>
+
+    <!-- LEVEL 3 -->
+    <div id="stage-3" class="npc-card hidden">
+        <h3>3. Meet Woodcutter Wendy 🪵</h3>
+        <p>Wendy says: "I'm freezing and hungry! I need warm bread. I'll give you my wooden spoon in return!"</p>
+        <button onclick="makeChoice(3, true)">Trade Bread for Wooden Spoon 🥄</button>
+        <button onclick="makeChoice(3, false)">Keep the Bread</button>
+        <p id="feedback-3" class="hidden"></p>
+    </div>
+
+    <!-- WIN SCREEN -->
+    <div id="win-screen" class="hidden">
+        <h2>🎉 LEVEL 1 COMPLETED! 🎉</h2>
+        <p>You successfully traded your way through the market using pure **Barter** (direct trading without money)!</p>
+        <p>🏆 <strong>Badge Unlocked:</strong> Master Trader Level 1</p>
+        <button onclick="location.reload()">Play Again 🔄</button>
+    </div>
+</div>
+
+<script>
+    function makeChoice(stage, isCorrect) {
+        if (stage === 1) {
+            const fb = document.getElementById('feedback-1');
+            fb.classList.remove('hidden');
+            if (isCorrect) {
+                fb.innerHTML = "<span class='success'>✅ Smart choice! You didn't need a bowl, you needed food. Let's move on!</span>";
+                setTimeout(() => {
+                    document.getElementById('stage-1').classList.add('hidden');
+                    document.getElementById('stage-2').classList.remove('hidden');
+                }, 2000);
+            } else {
+                fb.innerHTML = "<span class='error'>❌ Oops! You got a bowl, but now you have nothing to eat for dinner. Try again!</span>";
+            }
+        } else if (stage === 2) {
+            const fb = document.getElementById('feedback-2');
+            fb.classList.remove('hidden');
+            if (isCorrect) {
+                document.getElementById('item-held').innerText = "Warm Loaf of Bread 🍞";
+                fb.innerHTML = "<span class='success'>✅ Perfect Match! Bob wanted apples, you got bread!</span>";
+                setTimeout(() => {
+                    document.getElementById('stage-2').classList.add('hidden');
+                    document.getElementById('stage-3').classList.remove('hidden');
+                }, 2000);
+            } else {
+                fb.innerHTML = "<span class='error'>❌ Don't say no to food! Try trading with Bob.</span>";
+            }
+        } else if (stage === 3) {
+            const fb = document.getElementById('feedback-3');
+            fb.classList.remove('hidden');
+            if (isCorrect) {
+                document.getElementById('item-held').innerText = "Wooden Spoon 🥄";
+                fb.innerHTML = "<span class='success'>✅ Amazing! You got your dinner spoon!</span>";
+                setTimeout(() => {
+                    document.getElementById('stage-3').classList.add('hidden');
+                    document.getElementById('win-screen').classList.remove('hidden');
+                }, 2000);
+            } else {
+                fb.innerHTML = "<span class='error'>❌ You need the spoon to eat your soup! Trade the bread!</span>";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
