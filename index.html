@@ -1,0 +1,25 @@
+# Creates the week folders (1 to 9) and auto-generates index.html inside each
+for i in {1..9}; do
+  mkdir -p week$i
+  echo '<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week ' $i ' - Smart Money</title>
+    <style>
+        body { font-family: "Comic Sans MS", cursive, sans-serif; background: #e0f7fa; text-align: center; padding: 50px; color: #333; }
+        .card { background: white; max-width: 500px; margin: 0 auto; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { color: #ff6f00; }
+        a { display: inline-block; margin-top: 20px; background: #4caf50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🚀 Week '$i' App Coming Soon!</h1>
+        <p>The interactive game for Week '$i' is currently under construction.</p>
+        <a href="../index.html">⬅ Back to Dashboard</a>
+    </div>
+</body>
+</html>' > week$i/index.html
+done
